@@ -1,0 +1,71 @@
+%faire une compilation pdf de alert_stat.Rnw avec les deux fichiers macro.R et alert_stat.R
+%les packages R nécessaires sont ggplot2, lubridate, gridExtra, scales, gdata, reshape.
+%pour réactualiser la base, il faut supprimer dans le dossier rawseries.Rdata
+\documentclass{cas_dt}
+
+\ltitle{Mécanismes d'alerte dans l'Union européenne : analyse statistique}
+\title{Mécanismes d'alerte macroéconomique dans l'Union européenne : analyse statistique}
+  
+\author{Thomas Brand et Catherine Bruneau}
+\wpnumber{2013-XX}
+\date{Juillet 2013}
+\support{Département Economie-Finances}
+
+\begin{document}
+
+
+\maketitle
+
+\selectlanguage{french}
+
+\clearpage
+
+<<set_up,cache=FALSE,echo=FALSE>>=
+opts_chunk$set(echo=FALSE,message=FALSE,warning=FALSE,fig.pos='p',fig.align='center',fig.path="figure_stat/")
+read_chunk("alert_graph.R")
+read_chunk("alert_stat.R")
+options(digits=2)
+@
+
+
+<<preproc_data>>=
+@
+
+
+\section{Tendances}
+
+<<panel,fig.cap=c("Indicateurs de surveillance macroéconomique (effets année) pour les pays de l'Union Européenne (2000-2011)","Indicateurs de surveillance macroéconomique (effets année) pour les pays de la zone euro selon la région (2000-2011)")>>=
+@
+
+
+Dans un premier temps, l'analyse des indicateurs de surveillance macroéconomique définis au niveau européen a pour objectif de dessiner quelques faits stylisés. Le graphique \ref{fig:panel1} représente les tendances de ces différents indicateurs pour les pays de l'Union européenne dans son ensemble. Nous avons ici recours à une méthode statistique qui permet d'identifier une dynamique commune à ces pays\footnote{Pour construire ces tendances moyennes, on extrait les effets temps prédits à partir de régressions à effets fixes pays et années. Ainsi, pour la variable $x_{it}$, on estime la régression à effets fixes $x_{it}=a_i+b_t+\varepsilon_{it}$ et l'on représente graphiquement les effets années $b_t$ pour montrer l'effet moyen global de $x$ l'année $t$.}. 
+
+Lorsqu'on adapte cette méthodologie au cas des pays membres de la zone euro depuis 2001 (en distinguant les pays du coeur de ceux de la périphérie)\footnote{Les pays du coeur sont l'Allemagne, l'Autriche, la Belgique, la Finlande, la France et les Pays-Bas et ceux de la périphérie l'Espagne, la Grèce, l'Irlande, l'Italie, et le Portugal. On ne représente pas ici le Luxembourg.}, on observe dans le graphique \ref{fig:panel2} des configurations différentes selon les indicateurs. Parmi les divergences les plus anciennes entre les deux zones, la stabilité des comptes courants dans les pays du coeur et sa dégradation en périphérie est très visible. Ce phénomène est concommitant d'une baisse pour ces mêmes pays des parts de marché des exportations et de la position extérieure nette de l'investissement. L'autre grande divergence, à partir de 2002-2003, est l'envolée du crédit et de la dette privée dans les pays de la périphérie, relativement à ceux du coeur. Ce n'est en revanche qu'au moment de la crise que la dette publique augmente fortement dans cette zone, tout comme le chômage (qui était d'aileurs sur une tendance plus faible en périphérie). La chute spectaculaire du crédit privé en périphérie permet à peine la stabilité de l'endettement privé, mais en revanche une brusque correction de l'indice des prix des logements. Le coût salarial unitaire nominal diminue lui aussi très fortement dans les pays de la périphérie. Les soldes courants convergent quant à eux tandis que les taux de change effectifs réels divergent. 
+
+
+\section{Analyse prédictive}
+
+<<fragil,eval=T,fig.cap="Évolution de l'indice de fragilité dans les 17 pays de la zone euro",fig.width=5,fig.height=5>>=
+@
+
+
+<<auroc,eval=T,fig.cap="Performances prédictives des différents indicateurs retardés (True Positive Rate en ordonnée, False Positive Rate en abscisse)">>=
+@
+
+Dans un second temps, on examine la pertinence des différents indicateurs pour prévoir la fragilité macroéconomique d'un pays. La première étape est de définir une variable indiquant la fragilité ou non d'un pays une année donnée. On juge qu'un pays est fragile macroéconomiquement si au moins 4 des 11 indicateurs franchissent les seuils définis préalablement. L'évolution de la part des pays de la zone euro qui connaissent une fragilité macroéconomique selon ce nouvel indicateur est conforme, d'après le graphique \ref{fig:fragil}, à une analyse narrative des épisodes d'expansion et de récession des pays. On atteint un pic en 2009 de la part de pays fragiles dans la zone euro. %Cette part augmentait d'ailleurs sensiblement depuis 2002.
+
+La seconde étape consiste à effectuer une régression logistique de cette nouvelle indicatrice de fragilité macroéconomique sur chaque indicateur, retardé\footnote{Le critère AUC (Area Under the Curve) permet de juger des performances prédictives pour chaque indicateur.}. Comme le montre le graphique \ref{fig:auroc}, le compte courant apparaît comme le meilleur indicateur, parmi ceux retenus par la Commission européenne, de fragilité macroéconomique. Le deuxième est le crédit privé. 
+%Les estimations sont fournies dans les équations ci-dessous.
+
+% \begin{eqnarray}
+% P(\textrm{Fragilité}) &=& \Sexpr{get("fit.logitcaI")$coef[1]}\Sexpr{get("fit.logitcaI")$coef[2]}*\textrm{compte courant}_{t-1}+\Sexpr{get("fit.logitcaI")$coef[3]}*\textrm{compte courant}_{t-2}, \\
+% P(\textrm{Fragilité}) &=& \Sexpr{get("fit.logitcrI")$coef[1]}+\Sexpr{get("fit.logitcrI")$coef[2]}*\textrm{crédit}_{t-1}+\Sexpr{get("fit.logitcrI")$coef[3]}*\textrm{crédit}_{t-2}.
+% %\label{eq:caI}
+% \end{eqnarray}
+
+%Un autre résultat est que la dette publique fait partie des indicateurs les plus médiocres dans notre échantillon pour prédire la fragilité macroéconomique d'un pays. 
+Ces résultats sont robustes aux changements dans la valeur du seuil pour définir l'indicatrice de fragilité macroéconomique et aux nombres de retards dans les variables explicatives. La régression qui combine comptes courants et crédit retardés n'améliore quant à elle que très peu les performances prédictives.
+
+
+
+\end{document}
