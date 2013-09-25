@@ -1,18 +1,18 @@
 %faire une compilation pdf de alert_graph.Rnw avec les deux fichiers macro.R et alert_graph.R
-%les packages R nécessaires sont ggplot2, lubridate, gridExtra, scales, gdata, reshape.
-%pour réactualiser la base, il faut supprimer dans le dossier rawseries.Rdata
+%les packages R nÃ©cessaires sont ggplot2, lubridate, gridExtra, scales, gdata, reshape.
+%pour rÃ©actualiser la base, il faut supprimer dans le dossier rawseries.Rdata
 \documentclass{cas_dt}
 
 \usepackage{morefloats}
 \usepackage{animate}
 
-\ltitle{Mécanismes d'alerte dans l'Union européenne : analyse graphique}
-\title{Mécanismes d'alerte macroéconomique dans l'Union européenne : analyse graphique}
+\ltitle{MÃ©canismes d'alerte dans l'Union europÃ©enne : analyse graphique}
+\title{MÃ©canismes d'alerte macroÃ©conomique dans l'Union europÃ©enne : analyse graphique}
 
 \author{Mahdi Ben Jelloul et Thomas Brand}
 \wpnumber{2013-XX}
 \date{Juillet 2013}
-\support{Département Economie-Finances}
+\support{DÃ©partement Economie-Finances}
 
 \begin{document}
 
@@ -25,33 +25,33 @@
 
 
 \vspace*{\fill}
-\section*{Méthodologie et lecture}
+\section*{MÃ©thodologie et lecture}
 
-L'analyse des indicateurs de surveillance macroéconomique définis au niveau européen, rappelés dans le tableau \ref{tab:paramval}, a ici pour objectif de dessiner quelques faits stylisés. Le graphique \ref{fig:panel1} représente les tendances de ces différents indicateurs pour les pays de l'Union européenne dans son ensemble. Nous avons ici recours à une méthode statistique qui permet d'identifier une dynamique commune à ces pays\footnote{Pour construire ces tendances moyennes, on extrait les effets temps prédits à partir de régressions à effets fixes pays et années. Ainsi, pour la variable $x_{it}$, on estime la régression à effets fixes $x_{it}=a_i+b_t+\varepsilon_{it}$ et l'on représente graphiquement les effets années $b_t$ pour montrer l'effet moyen global de $x$ l'année $t$.}. 
+L'analyse des indicateurs de surveillance macroÃ©conomique dÃ©finis au niveau europÃ©en, rappelÃ©s dans le tableau \ref{tab:paramval}, a ici pour objectif de dessiner quelques faits stylisÃ©s. Le graphique \ref{fig:panel1} reprÃ©sente les tendances de ces diffÃ©rents indicateurs pour les pays de l'Union europÃ©enne dans son ensemble. Nous avons ici recours Ã  une mÃ©thode statistique qui permet d'identifier une dynamique commune Ã  ces pays\footnote{Pour construire ces tendances moyennes, on extrait les effets temps prÃ©dits Ã  partir de rÃ©gressions Ã  effets fixes pays et annÃ©es. Ainsi, pour la variable $x_{it}$, on estime la rÃ©gression Ã  effets fixes $x_{it}=a_i+b_t+\varepsilon_{it}$ et l'on reprÃ©sente graphiquement les effets annÃ©es $b_t$ pour montrer l'effet moyen global de $x$ l'annÃ©e $t$.}. 
 
-Lorsqu'on adapte cette méthodologie au cas des pays membres de la zone euro depuis 2001 (en distinguant les pays du coeur de ceux de la périphérie)\footnote{Les pays du coeur sont l'Allemagne, l'Autriche, la Belgique, la Finlande, la France et les Pays-Bas et ceux de la périphérie l'Espagne, la Grèce, l'Irlande, l'Italie, et le Portugal. On ne représente pas ici le Luxembourg.}, on observe dans le graphique \ref{fig:panel2} des configurations différentes selon les indicateurs. Parmi les divergences les plus anciennes entre les deux zones, la stabilité des comptes courants dans les pays du coeur et sa dégradation en périphérie est très visible. Ce phénomène est concommitant d'une baisse pour ces mêmes pays des parts de marché des exportations et de la position extérieure nette de l'investissement. L'autre grande divergence, à partir de 2002-2003, est l'envolée du crédit et de la dette privée dans les pays de la périphérie, relativement à ceux du coeur. Ce n'est en revanche qu'au moment de la crise que la dette publique augmente fortement dans cette zone, tout comme le chômage (qui était d'aileurs sur une tendance plus faible en périphérie). La chute spectaculaire du crédit privé en périphérie permet à peine la stabilité de l'endettement privé, mais en revanche une brusque correction de l'indice des prix des logements. Le coût salarial unitaire nominal diminue lui aussi très fortement dans les pays de la périphérie. Les soldes courants convergent quant à eux tandis que les taux de change effectifs réels divergent. Les graphiques suivants présentent le détail des séries, par pays puis par indicateur.
+Lorsqu'on adapte cette mÃ©thodologie au cas des pays membres de la zone euro depuis 2001 (en distinguant les pays du coeur de ceux de la pÃ©riphÃ©rie)\footnote{Les pays du coeur sont l'Allemagne, l'Autriche, la Belgique, la Finlande, la France et les Pays-Bas et ceux de la pÃ©riphÃ©rie l'Espagne, la GrÃ¨ce, l'Irlande, l'Italie, et le Portugal. On ne reprÃ©sente pas ici le Luxembourg.}, on observe dans le graphique \ref{fig:panel2} des configurations diffÃ©rentes selon les indicateurs. Parmi les divergences les plus anciennes entre les deux zones, la stabilitÃ© des comptes courants dans les pays du coeur et sa dÃ©gradation en pÃ©riphÃ©rie est trÃ¨s visible. Ce phÃ©nomÃ¨ne est concommitant d'une baisse pour ces mÃªmes pays des parts de marchÃ© des exportations et de la position extÃ©rieure nette de l'investissement. L'autre grande divergence, Ã  partir de 2002-2003, est l'envolÃ©e du crÃ©dit et de la dette privÃ©e dans les pays de la pÃ©riphÃ©rie, relativement Ã  ceux du coeur. Ce n'est en revanche qu'au moment de la crise que la dette publique augmente fortement dans cette zone, tout comme le chÃ´mage (qui Ã©tait d'aileurs sur une tendance plus faible en pÃ©riphÃ©rie). La chute spectaculaire du crÃ©dit privÃ© en pÃ©riphÃ©rie permet Ã  peine la stabilitÃ© de l'endettement privÃ©, mais en revanche une brusque correction de l'indice des prix des logements. Le coÃ»t salarial unitaire nominal diminue lui aussi trÃ¨s fortement dans les pays de la pÃ©riphÃ©rie. Les soldes courants convergent quant Ã  eux tandis que les taux de change effectifs rÃ©els divergent. Les graphiques suivants prÃ©sentent le dÃ©tail des sÃ©ries, par pays puis par indicateur.
 
 \vspace*{\fill}
 
 \begin{table}
 \begin{center}
-\caption{Valeurs des paramètres}
+\caption{Valeurs des paramÃ¨tres}
 \begin{tabular}{llc}
 \hline
 Indicateur & Description & Seuil\\
 \hline
 Balance du compte & & \\ des transactions courantes & Moyenne sur 3 ans & +6\% \& -4\% du PIB \\
-Position extérieure & & \\ de l'investissement net & Annuelle & -35\% du PIB\\
-Taux de change effectif réel & Variation sur 3 ans & +/- 5\% (ZE) \\
+Position extÃ©rieure & & \\ de l'investissement net & Annuelle & -35\% du PIB\\
+Taux de change effectif rÃ©el & Variation sur 3 ans & +/- 5\% (ZE) \\
 & & +/- 11\% (hors ZE) \\
-Part de marché & & \\ des exportations mondiales & Variation sur 5 ans & -6\% \\
-Coût salarial unitaire nominal & Variation sur 3 ans & +9\% (ZE) \\
+Part de marchÃ© & & \\ des exportations mondiales & Variation sur 5 ans & -6\% \\
+CoÃ»t salarial unitaire nominal & Variation sur 3 ans & +9\% (ZE) \\
 & & +12\% (hors ZE) \\
-Indice des prix & & \\ des logements, déflaté & Taux de croissance annuel & +6\%\\
-Flux de crédit privé & Annuel, non-consolidé & +15 \% du PIB \\
-Dette privée & Annuelle, non-consolidée & 160 \% du PIB \\
-Dette publique & Critères de Maastricht & 60 \% du PIB \\
-Taux de chômage & Moyenne sur 3 ans & 10\% \\
+Indice des prix & & \\ des logements, dÃ©flatÃ© & Taux de croissance annuel & +6\%\\
+Flux de crÃ©dit privÃ© & Annuel, non-consolidÃ© & +15 \% du PIB \\
+Dette privÃ©e & Annuelle, non-consolidÃ©e & 160 \% du PIB \\
+Dette publique & CritÃ¨res de Maastricht & 60 \% du PIB \\
+Taux de chÃ´mage & Moyenne sur 3 ans & 10\% \\
 Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +16.5\%\\
 \hline
 \label{tab:paramval}
@@ -70,7 +70,7 @@ read_chunk("alert_stat.R")
 <<preproc_data>>=
 @
 
-<<panel,fig.cap=c("Indicateurs de surveillance macroéconomique (effets année) pour les pays de l'Union Européenne (2000-2011)","Indicateurs de surveillance macroéconomique (effets année) pour les pays de la zone euro selon la région (2000-2011)")>>=
+<<panel,fig.cap=c("Indicateurs de surveillance macroÃ©conomique (effets annÃ©e) pour les pays de l'Union EuropÃ©enne (2000-2011)","Indicateurs de surveillance macroÃ©conomique (effets annÃ©e) pour les pays de la zone euro selon la rÃ©gion (2000-2011)")>>=
 @
 
 \clearpage

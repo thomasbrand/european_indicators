@@ -1,7 +1,7 @@
 ## @knitr preproc_data
-# crï¿½e une data.frame "procdata" qui contient tous les pays de l'UE, 
-# avec les 10 indicateurs jusqu'au dernier point connu, sï¿½parï¿½s entre pays 
-# de la zone euro et les autres. 
+#crée une data.frame "procdata" qui contient tous les pays de l'UE, 
+#avec les 10 indicateurs jusqu'au dernier point connu, séparés entre pays 
+#de la zone euro et les autres. 
 
 rm(list = ls())
 setwd("C:/Users/Utilisateur/Dropbox/GraphR/six_pack")
@@ -23,14 +23,14 @@ files <- list("tipsbp10","tipsbp20","tipsbp40",
 
 names <- list("Compte courant, % du PIB (moy. 3 ans)","caA","caQ",
               "Position ext. nette de l'investissement, % du PIB","nfaA","nfaQ","nfaIQ",
-              "Taux de change effectif rï¿½el (var. 3 ans)","eerZE",
-              "Part de marchï¿½ des exportations (var. 5 ans)","expA",
-              "Coï¿½t salarial unitaire nominal (var. 3 ans)","ulcA","ulcQ",
-              "Indice prix des logements dï¿½flatï¿½ (tx de croissance)","hpA","hpQ",
-              "Crï¿½dit privï¿½, % du PIB","crA","crQ",
-              "Dette privï¿½e, % du PIB","pdA","pdQ",
+              "Taux de change effectif réel (var. 3 ans)","eerZE",
+              "Part de marché des exportations (var. 5 ans)","expA",
+              "Coût salarial unitaire nominal (var. 3 ans)","ulcA","ulcQ",
+              "Indice prix des logements déflaté (tx de croissance)","hpA","hpQ",
+              "Crédit privé, % du PIB","crA","crQ",
+              "Dette privée, % du PIB","pdA","pdQ",
               "Dette publique, % du PIB","dQ",
-              "Taux de chï¿½mage (moy. 3 ans)","unA","unQ",
+              "Taux de chômage (moy. 3 ans)","unA","unQ",
               "Passif du secteur financier (tx de croissance)","Levier du secteur financier (dette/actions)")
 
 rawdata<-data.frame()
@@ -48,12 +48,12 @@ if (!file.exists(rawdatafile)){
 
 finaldata<-rawdata
 
-#on sï¿½lectionne les indicateurs pertinents pour l'analyse
+#on sélectionne les indicateurs pertinents pour l'analyse
 tablename<-list("tipsbp10","tipsii10","tipser10","tipsex10","tipslm10",
                 "tipsho10","tipspc10","tipspd10","tipsgo10","tipsun10","tipsfs10")
 finaldata<-finaldata[finaldata$variable %in% tablename,]
 
-#on ajoute l'attribut name ï¿½ la dataframe
+#on ajoute l'attribut name à la dataframe
 finaldata$name<-finaldata$variable
 for (i in 1:length(files)){
   finaldata$name[finaldata$variable == paste(files[i])] <- paste(names[i])
@@ -77,28 +77,28 @@ procdata <- subset(finaldata,year(finaldata$date)>=1999 & year(finaldata$date)<=
 
 title_ind <- list("Compte courant, % du PIB (moy. 3 ans)",
                   "Position ext. nette de l'investissement, % du PIB",
-                  "Taux de change effectif rï¿½el (var. 3 ans)",
-                  "Part de marchï¿½ des exportations (var. 5 ans)",
-                  "Coï¿½t salarial unitaire nominal (var. 3 ans)",
-                  "Indice prix des logements dï¿½flatï¿½ (tx de croissance)",
-                  "Crï¿½dit privï¿½, % du PIB",
-                  "Dette privï¿½e, % du PIB",
+                  "Taux de change effectif réel (var. 3 ans)",
+                  "Part de marché des exportations (var. 5 ans)",
+                  "Coût salarial unitaire nominal (var. 3 ans)",
+                  "Indice prix des logements déflaté (tx de croissance)",
+                  "Crédit privé, % du PIB",
+                  "Dette privée, % du PIB",
                   "Dette publique, % du PIB",
-                  "Taux de chï¿½mage (moy. 3 ans)",
+                  "Taux de chômage (moy. 3 ans)",
                   "Passif du secteur financier (tx de croissance)")
 
-title_co <- list("Autriche","Belgique","Bulgarie","Chypre","Tchï¿½coslovaquie","Allemagne",
-                 "Danemark","Estonie","Grï¿½ce","Espagne","Finlande","France","Croatie","Hongrie",
+title_co <- list("Autriche","Belgique","Bulgarie","Chypre","Tchécoslovaquie","Allemagne",
+                 "Danemark","Estonie","Grèce","Espagne","Finlande","France","Croatie","Hongrie",
                  "Irlande","Italie","Lituanie","Luxembourg","Lettonie","Malte",
-                 "Pays-Bas","Pologne","Portugal","Roumanie","Suï¿½de","Slovanie",
+                 "Pays-Bas","Pologne","Portugal","Roumanie","Suède","Slovanie",
                  "Slovaquie","Grande-Bretagne")
 
-fig.cap_ind <- c("Compte courant, pourcent. du PIB (moy. 3 ans)","Position ext. nette de l'investissement, pourcent. du PIB","Taux de change effectif rï¿½el (var. 3 ans)","Part de marchï¿½ des exportations (var. 5 ans)","Coï¿½t salarial unitaire nominal (var. 3 ans)","Indice prix des logements dï¿½flatï¿½ (tx de croissance)","Crï¿½dit privï¿½, pourcent. du PIB","Dette privï¿½e, pourcent. du PIB","Dette publique, pourcent. du PIB","Taux de chï¿½mage (moy. 3 ans)","Passif du secteur financier (tx de croissance)")
-fig.cap_co <- c("Indicateurs de surveillance macroï¿½conomique - Autriche","Indicateurs de surveillance macroï¿½conomique - Belgique","Indicateurs de surveillance macroï¿½conomique - Bulgarie","Indicateurs de surveillance macroï¿½conomique - Chypre","Indicateurs de surveillance macroï¿½conomique - Rï¿½p. tchï¿½que","Indicateurs de surveillance macroï¿½conomique - Allemagne","Indicateurs de surveillance macroï¿½conomique - Danemark","Indicateurs de surveillance macroï¿½conomique - Estonie","Indicateurs de surveillance macroï¿½conomique - Grï¿½ce","Indicateurs de surveillance macroï¿½conomique - Espagne","Indicateurs de surveillance macroï¿½conomique - Finlande","Indicateurs de surveillance macroï¿½conomique - France","Indicateurs de surveillance macroï¿½conomique - Croatie","Indicateurs de surveillance macroï¿½conomique - Hongrie","Indicateurs de surveillance macroï¿½conomique - Irlande","Indicateurs de surveillance macroï¿½conomique - Italie","Indicateurs de surveillance macroï¿½conomique - Lituanie","Indicateurs de surveillance macroï¿½conomique - Luxembourg","Indicateurs de surveillance macroï¿½conomique - Lettonie","Indicateurs de surveillance macroï¿½conomique - Malte","Indicateurs de surveillance macroï¿½conomique - Pays-Bas","Indicateurs de surveillance macroï¿½conomique - Pologne","Indicateurs de surveillance macroï¿½conomique - Portugal","Indicateurs de surveillance macroï¿½conomique - Roumanie","Indicateurs de surveillance macroï¿½conomique - Suï¿½de","Indicateurs de surveillance macroï¿½conomique - Slovanie","Indicateurs de surveillance macroï¿½conomique - Slovaquie","Indicateurs de surveillance macroï¿½conomique - Gde-Bretagne")
+fig.cap_ind <- c("Compte courant, pourcent. du PIB (moy. 3 ans)","Position ext. nette de l'investissement, pourcent. du PIB","Taux de change effectif réel (var. 3 ans)","Part de marché des exportations (var. 5 ans)","Coût salarial unitaire nominal (var. 3 ans)","Indice prix des logements déflaté (tx de croissance)","Crédit privé, pourcent. du PIB","Dette privée, pourcent. du PIB","Dette publique, pourcent. du PIB","Taux de chômage (moy. 3 ans)","Passif du secteur financier (tx de croissance)")
+fig.cap_co <- c("Indicateurs de surveillance macroéconomique - Autriche","Indicateurs de surveillance macroéconomique - Belgique","Indicateurs de surveillance macroéconomique - Bulgarie","Indicateurs de surveillance macroéconomique - Chypre","Indicateurs de surveillance macroéconomique - Rép. tchèque","Indicateurs de surveillance macroéconomique - Allemagne","Indicateurs de surveillance macroéconomique - Danemark","Indicateurs de surveillance macroéconomique - Estonie","Indicateurs de surveillance macroéconomique - Grèce","Indicateurs de surveillance macroéconomique - Espagne","Indicateurs de surveillance macroéconomique - Finlande","Indicateurs de surveillance macroéconomique - France","Indicateurs de surveillance macroéconomique - Croatie","Indicateurs de surveillance macroéconomique - Hongrie","Indicateurs de surveillance macroéconomique - Irlande","Indicateurs de surveillance macroéconomique - Italie","Indicateurs de surveillance macroéconomique - Lituanie","Indicateurs de surveillance macroéconomique - Luxembourg","Indicateurs de surveillance macroéconomique - Lettonie","Indicateurs de surveillance macroéconomique - Malte","Indicateurs de surveillance macroéconomique - Pays-Bas","Indicateurs de surveillance macroéconomique - Pologne","Indicateurs de surveillance macroéconomique - Portugal","Indicateurs de surveillance macroéconomique - Roumanie","Indicateurs de surveillance macroéconomique - Suède","Indicateurs de surveillance macroéconomique - Slovanie","Indicateurs de surveillance macroéconomique - Slovaquie","Indicateurs de surveillance macroéconomique - Gde-Bretagne")
 
 
 ## @knitr byco
-#crï¿½e les 28 graphs des indicateurs par pays
+#crée les 28 graphs des indicateurs par pays
 library(scales)
 source("../macroR/facetAdjust.R")
 
@@ -164,7 +164,7 @@ for (i in 1:length(country)){
     geom_rect(data=xlimits,aes(NULL,NULL,xmin=xmin,xmax=xmax),
               ymin=-Inf,ymax=+Inf,fill='red',alpha=0.1,linetype=0) +
                 scale_x_date(breaks=pretty_breaks(n=2)) +
-                #labs(title=(paste("Indicateurs de surveillance macroï¿½conomique",title_co[i],sep=" : "))) +
+                #labs(title=(paste("Indicateurs de surveillance macroéconomique",title_co[i],sep=" : "))) +
                 theme_bw() + theme(legend.position="none",
                                    #strip.text=element_blank(),
                                    strip.background=element_blank(),
@@ -175,7 +175,7 @@ for (i in 1:length(country)){
 
 
 ## @knitr byind
-#crï¿½e les 10 graphs des pays par indicateur
+#crée les 10 graphs des pays par indicateur
 library(gridExtra)
 library(scales)
 
@@ -215,7 +215,7 @@ for (j in 1:length(varnames)){
               fill='red',alpha=0.1,inherit.aes=FALSE,show_guide=FALSE) +
                 geom_rect(data=rect,aes(xmin=xmin,xmax=xmax,ymin=ymin2,ymax=ymax2),
                           fill='red',alpha=0.1,inherit.aes=FALSE,show_guide=FALSE) +
-                            scale_color_discrete(name="hors \nzone euro \n> mï¿½diane") +
+                            scale_color_discrete(name="hors \nzone euro \n> médiane") +
                             scale_x_datetime(breaks=pretty_breaks(n=2),labels=date_format("%Y"),minor_breaks="1 year") +
                             ylim(range(datasup$value,na.rm=T)) + mytheme
   
@@ -225,7 +225,7 @@ for (j in 1:length(varnames)){
               fill='red',alpha=0.1,inherit.aes=FALSE,show_guide=FALSE) +
                 geom_rect(data=rect,aes(xmin=xmin,xmax=xmax,ymin=ymin2,ymax=ymax2),
                           fill='red',alpha=0.1,inherit.aes=FALSE,show_guide=FALSE) +
-                            scale_color_discrete(name="hors \nzone euro \n< mï¿½diane") +
+                            scale_color_discrete(name="hors \nzone euro \n< médiane") +
                             scale_x_datetime(breaks=pretty_breaks(n=2),labels=date_format("%Y"),minor_breaks="1 year") +
                             ylim(range(datainf$value,na.rm=T)) + mytheme
   
@@ -244,7 +244,7 @@ for (j in 1:length(varnames)){
               fill='red',alpha=0.1,inherit.aes=FALSE,show_guide=FALSE) +
                 geom_rect(data=rect,aes(xmin=xmin,xmax=xmax,ymin=ymin2,ymax=ymax2),
                           fill='red',alpha=0.1,inherit.aes=FALSE,show_guide=FALSE) +
-                            scale_color_discrete(name="zone euro \n> mï¿½diane") +
+                            scale_color_discrete(name="zone euro \n> médiane") +
                             scale_x_datetime(breaks=pretty_breaks(n=2),labels=date_format("%Y"),minor_breaks="1 year") +
                             ylim(range(datasup$value,na.rm=T)) + mytheme
   
@@ -254,7 +254,7 @@ for (j in 1:length(varnames)){
               fill='red',alpha=0.1,inherit.aes=FALSE,show_guide=FALSE) +
                 geom_rect(data=rect,aes(xmin=xmin,xmax=xmax,ymin=ymin2,ymax=ymax2),
                           fill='red',alpha=0.1,inherit.aes=FALSE,show_guide=FALSE) +
-                            scale_color_discrete(name="zone euro \n< mï¿½diane") +
+                            scale_color_discrete(name="zone euro \n< médiane") +
                             scale_x_datetime(breaks=pretty_breaks(n=2),labels=date_format("%Y"),minor_breaks="1 year") +
                             ylim(range(datainf$value,na.rm=T)) + mytheme
   
