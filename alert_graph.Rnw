@@ -1,33 +1,25 @@
-%faire une compilation pdf de alert_graph.Rnw avec les deux fichiers macro.R et alert_graph.R
+%faire une compilation pdf de alert_graph.Rnw avec le fichier alert_graph.R, alert_stat.R et les fonctions dans macroR
 %les packages R nécessaires sont ggplot2, lubridate, gridExtra, scales, gdata, reshape.
 %pour réactualiser la base, il faut supprimer dans le dossier rawseries.Rdata
-\documentclass{cas_dt}
+\documentclass{article}
 
 \usepackage{morefloats}
 \usepackage{animate}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
 
-\ltitle{Mécanismes d'alerte dans l'Union européenne : analyse graphique}
 \title{Mécanismes d'alerte macroéconomique dans l'Union européenne : analyse graphique}
 
-\author{Mahdi Ben Jelloul et Thomas Brand}
-\wpnumber{2013-XX}
-\date{Juillet 2013}
-\support{Département Economie-Finances}
+\author{Thomas Brand}
 
 \begin{document}
 
 
 \maketitle
 
-\selectlanguage{french}
 
-\clearpage
-
-
-\vspace*{\fill}
-\section*{Méthodologie et lecture}
-
-L'analyse des indicateurs de surveillance macroéconomique définis au niveau européen, rappelés dans le tableau \ref{tab:paramval}, a ici pour objectif de dessiner quelques faits stylisés. Le graphique \ref{fig:panel1} représente les tendances de ces différents indicateurs pour les pays de l'Union européenne dans son ensemble. Nous avons ici recours à une méthode statistique qui permet d'identifier une dynamique commune à ces pays\footnote{Pour construire ces tendances moyennes, on extrait les effets temps prédits à partir de régressions à effets fixes pays et années. Ainsi, pour la variable $x_{it}$, on estime la régression à effets fixes $x_{it}=a_i+b_t+\varepsilon_{it}$ et l'on représente graphiquement les effets années $b_t$ pour montrer l'effet moyen global de $x$ l'année $t$.}. 
+L'analyse des indicateurs de surveillance macroéconomique définis au niveau européen, rappelés dans le tableau \ref{tab:paramval}, a ici pour objectif de dessiner quelques faits stylisés. Le graphique \ref{fig:panel1} représente les tendances de ces différents indicateurs pour les pays de l'Union européenne dans son ensemble. Nous avons ici recours à une méthode statistique qui permet d'identifier une dynamique commune à ces pays.\footnote{Pour construire ces tendances moyennes, on extrait les effets temps prédits à partir de régressions à effets fixes pays et années. Ainsi, pour la variable $x_{it}$, on estime la régression à effets fixes $x_{it}=a_i+b_t+\varepsilon_{it}$ et l'on représente graphiquement les effets années $b_t$ pour montrer l'effet moyen global de $x$ l'année $t$.} 
 
 Lorsqu'on adapte cette méthodologie au cas des pays membres de la zone euro depuis 2001 (en distinguant les pays du coeur de ceux de la périphérie)\footnote{Les pays du coeur sont l'Allemagne, l'Autriche, la Belgique, la Finlande, la France et les Pays-Bas et ceux de la périphérie l'Espagne, la Grèce, l'Irlande, l'Italie, et le Portugal. On ne représente pas ici le Luxembourg.}, on observe dans le graphique \ref{fig:panel2} des configurations différentes selon les indicateurs. Parmi les divergences les plus anciennes entre les deux zones, la stabilité des comptes courants dans les pays du coeur et sa dégradation en périphérie est très visible. Ce phénomène est concommitant d'une baisse pour ces mêmes pays des parts de marché des exportations et de la position extérieure nette de l'investissement. L'autre grande divergence, à partir de 2002-2003, est l'envolée du crédit et de la dette privée dans les pays de la périphérie, relativement à ceux du coeur. Ce n'est en revanche qu'au moment de la crise que la dette publique augmente fortement dans cette zone, tout comme le chômage (qui était d'aileurs sur une tendance plus faible en périphérie). La chute spectaculaire du crédit privé en périphérie permet à peine la stabilité de l'endettement privé, mais en revanche une brusque correction de l'indice des prix des logements. Le coût salarial unitaire nominal diminue lui aussi très fortement dans les pays de la périphérie. Les soldes courants convergent quant à eux tandis que les taux de change effectifs réels divergent. Les graphiques suivants présentent le détail des séries, par pays puis par indicateur.
 

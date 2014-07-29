@@ -1,7 +1,7 @@
-%faire une compilation pdf de alert_graph.Rnw avec les deux fichiers macro.R et alert_graph.R
-%les packages R nécessaires sont ggplot2, lubridate, gridExtra, scales, gdata, reshape.
-%pour réactualiser la base, il faut supprimer dans le dossier rawseries.Rdata
-\documentclass{cas_dt}\usepackage{graphicx, color}
+%faire une compilation pdf de alert_graph.Rnw avec le fichier alert_graph.R, alert_stat.R et les fonctions dans macroR
+%les packages R nÃ©cessaires sont ggplot2, lubridate, gridExtra, scales, gdata, reshape.
+%pour rÃ©actualiser la base, il faut supprimer dans le dossier rawseries.Rdata
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
 %% maxwidth is the original width if it is less than linewidth
 %% otherwise use linewidth (to make sure the graphics do not exceed the margin)
 \makeatletter
@@ -14,21 +14,16 @@
 }
 \makeatother
 
-\definecolor{fgcolor}{rgb}{0.2, 0.2, 0.2}
-\newcommand{\hlnumber}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlfunctioncall}[1]{\textcolor[rgb]{0.501960784313725,0,0.329411764705882}{\textbf{#1}}}%
-\newcommand{\hlstring}[1]{\textcolor[rgb]{0.6,0.6,1}{#1}}%
-\newcommand{\hlkeyword}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
-\newcommand{\hlargument}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
-\newcommand{\hlcomment}[1]{\textcolor[rgb]{0.180392156862745,0.6,0.341176470588235}{#1}}%
-\newcommand{\hlroxygencomment}[1]{\textcolor[rgb]{0.43921568627451,0.47843137254902,0.701960784313725}{#1}}%
-\newcommand{\hlformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
-\newcommand{\hleqformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
-\newcommand{\hlassignement}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
-\newcommand{\hlpackage}[1]{\textcolor[rgb]{0.588235294117647,0.709803921568627,0.145098039215686}{#1}}%
-\newcommand{\hlslot}[1]{\textit{#1}}%
-\newcommand{\hlsymbol}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlprompt}[1]{\textcolor[rgb]{0.2,0.2,0.2}{#1}}%
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
 
 \usepackage{framed}
 \makeatletter
@@ -59,54 +54,45 @@
 
 \usepackage{morefloats}
 \usepackage{animate}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
 
-\ltitle{Mécanismes d'alerte dans l'Union européenne : analyse graphique}
-\title{Mécanismes d'alerte macroéconomique dans l'Union européenne : analyse graphique}
+\title{MÃ©canismes d'alerte macroÃ©conomique dans l'Union europÃ©enne : analyse graphique}
 
-\author{Mahdi Ben Jelloul et Thomas Brand}
-\wpnumber{2013-XX}
-\date{Juillet 2013}
-\support{Département Economie-Finances}
+\author{Thomas Brand}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-
 \begin{document}
 
 
 \maketitle
 
-\selectlanguage{french}
 
-\clearpage
+L'analyse des indicateurs de surveillance macroÃ©conomique dÃ©finis au niveau europÃ©en, rappelÃ©s dans le tableau \ref{tab:paramval}, a ici pour objectif de dessiner quelques faits stylisÃ©s. Le graphique \ref{fig:panel1} reprÃ©sente les tendances de ces diffÃ©rents indicateurs pour les pays de l'Union europÃ©enne dans son ensemble. Nous avons ici recours Ã  une mÃ©thode statistique qui permet d'identifier une dynamique commune Ã  ces pays.\footnote{Pour construire ces tendances moyennes, on extrait les effets temps prÃ©dits Ã  partir de rÃ©gressions Ã  effets fixes pays et annÃ©es. Ainsi, pour la variable $x_{it}$, on estime la rÃ©gression Ã  effets fixes $x_{it}=a_i+b_t+\varepsilon_{it}$ et l'on reprÃ©sente graphiquement les effets annÃ©es $b_t$ pour montrer l'effet moyen global de $x$ l'annÃ©e $t$.} 
 
-
-\vspace*{\fill}
-\section*{Méthodologie et lecture}
-
-L'analyse des indicateurs de surveillance macroéconomique définis au niveau européen, rappelés dans le tableau \ref{tab:paramval}, a ici pour objectif de dessiner quelques faits stylisés. Le graphique \ref{fig:panel1} représente les tendances de ces différents indicateurs pour les pays de l'Union européenne dans son ensemble. Nous avons ici recours à une méthode statistique qui permet d'identifier une dynamique commune à ces pays\footnote{Pour construire ces tendances moyennes, on extrait les effets temps prédits à partir de régressions à effets fixes pays et années. Ainsi, pour la variable $x_{it}$, on estime la régression à effets fixes $x_{it}=a_i+b_t+\varepsilon_{it}$ et l'on représente graphiquement les effets années $b_t$ pour montrer l'effet moyen global de $x$ l'année $t$.}. 
-
-Lorsqu'on adapte cette méthodologie au cas des pays membres de la zone euro depuis 2001 (en distinguant les pays du coeur de ceux de la périphérie)\footnote{Les pays du coeur sont l'Allemagne, l'Autriche, la Belgique, la Finlande, la France et les Pays-Bas et ceux de la périphérie l'Espagne, la Grèce, l'Irlande, l'Italie, et le Portugal. On ne représente pas ici le Luxembourg.}, on observe dans le graphique \ref{fig:panel2} des configurations différentes selon les indicateurs. Parmi les divergences les plus anciennes entre les deux zones, la stabilité des comptes courants dans les pays du coeur et sa dégradation en périphérie est très visible. Ce phénomène est concommitant d'une baisse pour ces mêmes pays des parts de marché des exportations et de la position extérieure nette de l'investissement. L'autre grande divergence, à partir de 2002-2003, est l'envolée du crédit et de la dette privée dans les pays de la périphérie, relativement à ceux du coeur. Ce n'est en revanche qu'au moment de la crise que la dette publique augmente fortement dans cette zone, tout comme le chômage (qui était d'aileurs sur une tendance plus faible en périphérie). La chute spectaculaire du crédit privé en périphérie permet à peine la stabilité de l'endettement privé, mais en revanche une brusque correction de l'indice des prix des logements. Le coût salarial unitaire nominal diminue lui aussi très fortement dans les pays de la périphérie. Les soldes courants convergent quant à eux tandis que les taux de change effectifs réels divergent. Les graphiques suivants présentent le détail des séries, par pays puis par indicateur.
+Lorsqu'on adapte cette mÃ©thodologie au cas des pays membres de la zone euro depuis 2001 (en distinguant les pays du coeur de ceux de la pÃ©riphÃ©rie)\footnote{Les pays du coeur sont l'Allemagne, l'Autriche, la Belgique, la Finlande, la France et les Pays-Bas et ceux de la pÃ©riphÃ©rie l'Espagne, la GrÃ¨ce, l'Irlande, l'Italie, et le Portugal. On ne reprÃ©sente pas ici le Luxembourg.}, on observe dans le graphique \ref{fig:panel2} des configurations diffÃ©rentes selon les indicateurs. Parmi les divergences les plus anciennes entre les deux zones, la stabilitÃ© des comptes courants dans les pays du coeur et sa dÃ©gradation en pÃ©riphÃ©rie est trÃ¨s visible. Ce phÃ©nomÃ¨ne est concommitant d'une baisse pour ces mÃªmes pays des parts de marchÃ© des exportations et de la position extÃ©rieure nette de l'investissement. L'autre grande divergence, Ã  partir de 2002-2003, est l'envolÃ©e du crÃ©dit et de la dette privÃ©e dans les pays de la pÃ©riphÃ©rie, relativement Ã  ceux du coeur. Ce n'est en revanche qu'au moment de la crise que la dette publique augmente fortement dans cette zone, tout comme le chÃ´mage (qui Ã©tait d'aileurs sur une tendance plus faible en pÃ©riphÃ©rie). La chute spectaculaire du crÃ©dit privÃ© en pÃ©riphÃ©rie permet Ã  peine la stabilitÃ© de l'endettement privÃ©, mais en revanche une brusque correction de l'indice des prix des logements. Le coÃ»t salarial unitaire nominal diminue lui aussi trÃ¨s fortement dans les pays de la pÃ©riphÃ©rie. Les soldes courants convergent quant Ã  eux tandis que les taux de change effectifs rÃ©els divergent. Les graphiques suivants prÃ©sentent le dÃ©tail des sÃ©ries, par pays puis par indicateur.
 
 \vspace*{\fill}
 
 \begin{table}
 \begin{center}
-\caption{Valeurs des paramètres}
+\caption{Valeurs des paramÃ¨tres}
 \begin{tabular}{llc}
 \hline
 Indicateur & Description & Seuil\\
 \hline
 Balance du compte & & \\ des transactions courantes & Moyenne sur 3 ans & +6\% \& -4\% du PIB \\
-Position extérieure & & \\ de l'investissement net & Annuelle & -35\% du PIB\\
-Taux de change effectif réel & Variation sur 3 ans & +/- 5\% (ZE) \\
+Position extÃ©rieure & & \\ de l'investissement net & Annuelle & -35\% du PIB\\
+Taux de change effectif rÃ©el & Variation sur 3 ans & +/- 5\% (ZE) \\
 & & +/- 11\% (hors ZE) \\
-Part de marché & & \\ des exportations mondiales & Variation sur 5 ans & -6\% \\
-Coût salarial unitaire nominal & Variation sur 3 ans & +9\% (ZE) \\
+Part de marchÃ© & & \\ des exportations mondiales & Variation sur 5 ans & -6\% \\
+CoÃ»t salarial unitaire nominal & Variation sur 3 ans & +9\% (ZE) \\
 & & +12\% (hors ZE) \\
-Indice des prix & & \\ des logements, déflaté & Taux de croissance annuel & +6\%\\
-Flux de crédit privé & Annuel, non-consolidé & +15 \% du PIB \\
-Dette privée & Annuelle, non-consolidée & 160 \% du PIB \\
-Dette publique & Critères de Maastricht & 60 \% du PIB \\
-Taux de chômage & Moyenne sur 3 ans & 10\% \\
+Indice des prix & & \\ des logements, dÃ©flatÃ© & Taux de croissance annuel & +6\%\\
+Flux de crÃ©dit privÃ© & Annuel, non-consolidÃ© & +15 \% du PIB \\
+Dette privÃ©e & Annuelle, non-consolidÃ©e & 160 \% du PIB \\
+Dette publique & CritÃ¨res de Maastricht & 60 \% du PIB \\
+Taux de chÃ´mage & Moyenne sur 3 ans & 10\% \\
 Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +16.5\%\\
 \hline
 \label{tab:paramval}
@@ -120,8 +106,6 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 
 
-
-
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}[p]
 
@@ -130,7 +114,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique (effets année) pour les pays de l'Union Européenne (2000-2011)]{Indicateurs de surveillance macroéconomique (effets année) pour les pays de l'Union Européenne (2000-2011)\label{fig:panel1}}
+\caption[Indicateurs de surveillance macroÃ©conomique (effets annÃ©e) pour les pays de l'Union EuropÃ©enne (2000-2011)]{Indicateurs de surveillance macroÃ©conomique (effets annÃ©e) pour les pays de l'Union EuropÃ©enne (2000-2011)\label{fig:panel1}}
 \end{figure}
 
 \begin{figure}[p]
@@ -140,12 +124,11 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique (effets année) pour les pays de la zone euro selon la région (2000-2011)]{Indicateurs de surveillance macroéconomique (effets année) pour les pays de la zone euro selon la région (2000-2011)\label{fig:panel2}}
+\caption[Indicateurs de surveillance macroÃ©conomique (effets annÃ©e) pour les pays de la zone euro selon la rÃ©gion (2000-2011)]{Indicateurs de surveillance macroÃ©conomique (effets annÃ©e) pour les pays de la zone euro selon la rÃ©gion (2000-2011)\label{fig:panel2}}
 \end{figure}
 
 
 \end{knitrout}
-
 
 \clearpage
 
@@ -157,7 +140,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Autriche]{Indicateurs de surveillance macroéconomique - Autriche\label{fig:byco1}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Autriche]{Indicateurs de surveillance macroÃƒÂ©conomique - Autriche\label{fig:byco1}}
 \end{figure}
 
 \begin{figure}[p]
@@ -167,7 +150,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Belgique]{Indicateurs de surveillance macroéconomique - Belgique\label{fig:byco2}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Belgique]{Indicateurs de surveillance macroÃƒÂ©conomique - Belgique\label{fig:byco2}}
 \end{figure}
 
 \begin{figure}[p]
@@ -177,7 +160,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Bulgarie]{Indicateurs de surveillance macroéconomique - Bulgarie\label{fig:byco3}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Bulgarie]{Indicateurs de surveillance macroÃƒÂ©conomique - Bulgarie\label{fig:byco3}}
 \end{figure}
 
 \begin{figure}[p]
@@ -187,7 +170,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Chypre]{Indicateurs de surveillance macroéconomique - Chypre\label{fig:byco4}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Chypre]{Indicateurs de surveillance macroÃƒÂ©conomique - Chypre\label{fig:byco4}}
 \end{figure}
 
 \begin{figure}[p]
@@ -197,7 +180,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Rép]{Indicateurs de surveillance macroéconomique - Rép. tchèque\label{fig:byco5}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - RÃƒÂ©p]{Indicateurs de surveillance macroÃƒÂ©conomique - RÃƒÂ©p. tchÃƒÂ¨que\label{fig:byco5}}
 \end{figure}
 
 \begin{figure}[p]
@@ -207,7 +190,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Allemagne]{Indicateurs de surveillance macroéconomique - Allemagne\label{fig:byco6}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Allemagne]{Indicateurs de surveillance macroÃƒÂ©conomique - Allemagne\label{fig:byco6}}
 \end{figure}
 
 \begin{figure}[p]
@@ -217,7 +200,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Danemark]{Indicateurs de surveillance macroéconomique - Danemark\label{fig:byco7}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Danemark]{Indicateurs de surveillance macroÃƒÂ©conomique - Danemark\label{fig:byco7}}
 \end{figure}
 
 \begin{figure}[p]
@@ -227,7 +210,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Estonie]{Indicateurs de surveillance macroéconomique - Estonie\label{fig:byco8}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Estonie]{Indicateurs de surveillance macroÃƒÂ©conomique - Estonie\label{fig:byco8}}
 \end{figure}
 
 \begin{figure}[p]
@@ -237,7 +220,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Grèce]{Indicateurs de surveillance macroéconomique - Grèce\label{fig:byco9}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Gr?ce]{Indicateurs de surveillance macroÃƒÂ©conomique - Gr?ce\label{fig:byco9}}
 \end{figure}
 
 \begin{figure}[p]
@@ -247,7 +230,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Espagne]{Indicateurs de surveillance macroéconomique - Espagne\label{fig:byco10}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Espagne]{Indicateurs de surveillance macroÃƒÂ©conomique - Espagne\label{fig:byco10}}
 \end{figure}
 
 \begin{figure}[p]
@@ -257,7 +240,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Finlande]{Indicateurs de surveillance macroéconomique - Finlande\label{fig:byco11}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Finlande]{Indicateurs de surveillance macroÃƒÂ©conomique - Finlande\label{fig:byco11}}
 \end{figure}
 
 \begin{figure}[p]
@@ -267,7 +250,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - France]{Indicateurs de surveillance macroéconomique - France\label{fig:byco12}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - France]{Indicateurs de surveillance macroÃƒÂ©conomique - France\label{fig:byco12}}
 \end{figure}
 
 \begin{figure}[p]
@@ -277,7 +260,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Croatie]{Indicateurs de surveillance macroéconomique - Croatie\label{fig:byco13}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Croatie]{Indicateurs de surveillance macroÃƒÂ©conomique - Croatie\label{fig:byco13}}
 \end{figure}
 
 \begin{figure}[p]
@@ -287,7 +270,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Hongrie]{Indicateurs de surveillance macroéconomique - Hongrie\label{fig:byco14}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Hongrie]{Indicateurs de surveillance macroÃƒÂ©conomique - Hongrie\label{fig:byco14}}
 \end{figure}
 
 \begin{figure}[p]
@@ -297,7 +280,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Irlande]{Indicateurs de surveillance macroéconomique - Irlande\label{fig:byco15}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Irlande]{Indicateurs de surveillance macroÃƒÂ©conomique - Irlande\label{fig:byco15}}
 \end{figure}
 
 \begin{figure}[p]
@@ -307,7 +290,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Italie]{Indicateurs de surveillance macroéconomique - Italie\label{fig:byco16}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Italie]{Indicateurs de surveillance macroÃƒÂ©conomique - Italie\label{fig:byco16}}
 \end{figure}
 
 \begin{figure}[p]
@@ -317,7 +300,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Lituanie]{Indicateurs de surveillance macroéconomique - Lituanie\label{fig:byco17}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Lituanie]{Indicateurs de surveillance macroÃƒÂ©conomique - Lituanie\label{fig:byco17}}
 \end{figure}
 
 \begin{figure}[p]
@@ -327,7 +310,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Luxembourg]{Indicateurs de surveillance macroéconomique - Luxembourg\label{fig:byco18}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Luxembourg]{Indicateurs de surveillance macroÃƒÂ©conomique - Luxembourg\label{fig:byco18}}
 \end{figure}
 
 \begin{figure}[p]
@@ -337,7 +320,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Lettonie]{Indicateurs de surveillance macroéconomique - Lettonie\label{fig:byco19}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Lettonie]{Indicateurs de surveillance macroÃƒÂ©conomique - Lettonie\label{fig:byco19}}
 \end{figure}
 
 \begin{figure}[p]
@@ -347,7 +330,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Malte]{Indicateurs de surveillance macroéconomique - Malte\label{fig:byco20}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Malte]{Indicateurs de surveillance macroÃƒÂ©conomique - Malte\label{fig:byco20}}
 \end{figure}
 
 \begin{figure}[p]
@@ -357,7 +340,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Pays-Bas]{Indicateurs de surveillance macroéconomique - Pays-Bas\label{fig:byco21}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Pays-Bas]{Indicateurs de surveillance macroÃƒÂ©conomique - Pays-Bas\label{fig:byco21}}
 \end{figure}
 
 \begin{figure}[p]
@@ -367,7 +350,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Pologne]{Indicateurs de surveillance macroéconomique - Pologne\label{fig:byco22}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Pologne]{Indicateurs de surveillance macroÃƒÂ©conomique - Pologne\label{fig:byco22}}
 \end{figure}
 
 \begin{figure}[p]
@@ -377,7 +360,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Portugal]{Indicateurs de surveillance macroéconomique - Portugal\label{fig:byco23}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Portugal]{Indicateurs de surveillance macroÃƒÂ©conomique - Portugal\label{fig:byco23}}
 \end{figure}
 
 \begin{figure}[p]
@@ -387,7 +370,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Roumanie]{Indicateurs de surveillance macroéconomique - Roumanie\label{fig:byco24}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Roumanie]{Indicateurs de surveillance macroÃƒÂ©conomique - Roumanie\label{fig:byco24}}
 \end{figure}
 
 \begin{figure}[p]
@@ -397,7 +380,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Suède]{Indicateurs de surveillance macroéconomique - Suède\label{fig:byco25}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Su?de]{Indicateurs de surveillance macroÃƒÂ©conomique - Su?de\label{fig:byco25}}
 \end{figure}
 
 \begin{figure}[p]
@@ -407,7 +390,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Slovanie]{Indicateurs de surveillance macroéconomique - Slovanie\label{fig:byco26}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Slovanie]{Indicateurs de surveillance macroÃƒÂ©conomique - Slovanie\label{fig:byco26}}
 \end{figure}
 
 \begin{figure}[p]
@@ -417,7 +400,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Slovaquie]{Indicateurs de surveillance macroéconomique - Slovaquie\label{fig:byco27}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Slovaquie]{Indicateurs de surveillance macroÃƒÂ©conomique - Slovaquie\label{fig:byco27}}
 \end{figure}
 
 \begin{figure}[p]
@@ -427,12 +410,11 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indicateurs de surveillance macroéconomique - Gde-Bretagne]{Indicateurs de surveillance macroéconomique - Gde-Bretagne\label{fig:byco28}}
+\caption[Indicateurs de surveillance macroÃƒÂ©conomique - Gde-Bretagne]{Indicateurs de surveillance macroÃƒÂ©conomique - Gde-Bretagne\label{fig:byco28}}
 \end{figure}
 
 
 \end{knitrout}
-
 
 \clearpage
 
@@ -464,7 +446,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Taux de change effectif réel (var]{Taux de change effectif réel (var. 3 ans)\label{fig:byind3}}
+\caption[Taux de change effectif rÃƒÂ©el (var]{Taux de change effectif rÃƒÂ©el (var. 3 ans)\label{fig:byind3}}
 \end{figure}
 
 \begin{figure}[p]
@@ -474,7 +456,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Part de marché des exportations (var]{Part de marché des exportations (var. 5 ans)\label{fig:byind4}}
+\caption[Part de marchÃƒÂ© des exportations (var]{Part de marchÃƒÂ© des exportations (var. 5 ans)\label{fig:byind4}}
 \end{figure}
 
 \begin{figure}[p]
@@ -484,7 +466,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Coût salarial unitaire nominal (var]{Coût salarial unitaire nominal (var. 3 ans)\label{fig:byind5}}
+\caption[CoÃƒÂ»t salarial unitaire nominal (var]{CoÃƒÂ»t salarial unitaire nominal (var. 3 ans)\label{fig:byind5}}
 \end{figure}
 
 \begin{figure}[p]
@@ -494,7 +476,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Indice prix des logements déflaté (tx de croissance)]{Indice prix des logements déflaté (tx de croissance)\label{fig:byind6}}
+\caption[Indice prix des logements dÃƒÂ©flatÃƒÂ© (tx de croissance)]{Indice prix des logements dÃƒÂ©flatÃƒÂ© (tx de croissance)\label{fig:byind6}}
 \end{figure}
 
 \begin{figure}[p]
@@ -504,7 +486,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Crédit privé, pourcent]{Crédit privé, pourcent. du PIB\label{fig:byind7}}
+\caption[CrÃƒÂ©dit privÃƒÂ©, pourcent]{CrÃƒÂ©dit privÃƒÂ©, pourcent. du PIB\label{fig:byind7}}
 \end{figure}
 
 \begin{figure}[p]
@@ -514,7 +496,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Dette privée, pourcent]{Dette privée, pourcent. du PIB\label{fig:byind8}}
+\caption[Dette privÃƒÂ©e, pourcent]{Dette privÃƒÂ©e, pourcent. du PIB\label{fig:byind8}}
 \end{figure}
 
 \begin{figure}[p]
@@ -534,7 +516,7 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 }
 
-\caption[Taux de chômage (moy]{Taux de chômage (moy. 3 ans)\label{fig:byind10}}
+\caption[Taux de chÃƒÂ´mage (moy]{Taux de chÃƒÂ´mage (moy. 3 ans)\label{fig:byind10}}
 \end{figure}
 
 \begin{figure}[p]
@@ -549,7 +531,6 @@ Passif de l'ensemble & & \\ du secteur financier & Taux de croissance annuel & +
 
 
 \end{knitrout}
-
 
 
 
